@@ -1,19 +1,19 @@
-From 092b939d987891479089689deb08f744a8ec570d Mon Sep 17 00:00:00 2001
-From: Uwe Korn <uwelk@xhochy.com>
-Date: Mon, 9 Feb 2026 12:19:07 +0000
-Subject: [PATCH 14/14] Use system ICU
+From bfa09cab892b9460d4cd47adfa9d647395951a1e Mon Sep 17 00:00:00 2001
+From: I-Al-Istannen <i-al-istannen@users.noreply.github.com>
+Date: Tue, 10 Feb 2026 22:25:43 +0100
+Subject: [PATCH] Use system ICU
 
 ---
- cmake/targets/BuildBun.cmake | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ cmake/targets/BuildBun.cmake | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/cmake/targets/BuildBun.cmake b/cmake/targets/BuildBun.cmake
-index 0a2f9b1..ae7566d 100644
+index 2b7d3a79f..f588bb269 100644
 --- a/cmake/targets/BuildBun.cmake
 +++ b/cmake/targets/BuildBun.cmake
-@@ -1288,11 +1288,6 @@ target_link_libraries(${bun} PRIVATE
-   zstd
- )
+@@ -1298,11 +1298,6 @@ endforeach()
+ list(TRANSFORM BUN_DEPENDENCIES TOLOWER OUTPUT_VARIABLE BUN_TARGETS)
+ add_custom_target(dependencies DEPENDS ${BUN_TARGETS})
  
 -if(APPLE)
 -  target_link_libraries(${bun} PRIVATE icucore resolv)
@@ -23,14 +23,19 @@ index 0a2f9b1..ae7566d 100644
  if(USE_STATIC_SQLITE)
    target_compile_definitions(${bun} PRIVATE LAZY_LOAD_SQLITE=0)
  else()
-@@ -1307,12 +1302,12 @@ if(LINUX)
+@@ -1317,17 +1312,12 @@ if(LINUX)
    else()
      target_link_libraries(${bun} PUBLIC libatomic.so)
    endif()
 -
--  target_link_libraries(${bun} PRIVATE ${WEBKIT_LIB_PATH}/libicudata.a)
--  target_link_libraries(${bun} PRIVATE ${WEBKIT_LIB_PATH}/libicui18n.a)
--  target_link_libraries(${bun} PRIVATE ${WEBKIT_LIB_PATH}/libicuuc.a)
+-  if(WEBKIT_LOCAL)
+-    find_package(ICU REQUIRED COMPONENTS data i18n uc)
+-    target_link_libraries(${bun} PRIVATE ICU::data ICU::i18n ICU::uc)
+-  else()
+-    target_link_libraries(${bun} PRIVATE ${WEBKIT_LIB_PATH}/libicudata.a)
+-    target_link_libraries(${bun} PRIVATE ${WEBKIT_LIB_PATH}/libicui18n.a)
+-    target_link_libraries(${bun} PRIVATE ${WEBKIT_LIB_PATH}/libicuuc.a)
+-  endif()
  endif()
  
 +target_link_libraries(${bun} PRIVATE $ENV{PREFIX}/lib/libicudata$ENV{SHLIB_EXT})
@@ -41,5 +46,5 @@ index 0a2f9b1..ae7566d 100644
    target_link_libraries(${bun} PRIVATE
      winmm
 -- 
-2.43.0
+2.52.0
 
