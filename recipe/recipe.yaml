@@ -64,7 +64,7 @@ source:
 
 build:
   skip: win
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -96,9 +96,18 @@ tests:
   - package_contents:
       bin:
         - bun
+        - bunx
+      files:
+        - share/bash-completion/completions/bun
+        - share/zsh/site-functions/_bun
+        - share/fish/vendor_completions.d/bun.fish
       strict: true
   - script:
       - bun --version
+      - bun --help
+      - bunx --version
+      # simple smoke test
+      - bunx cowsay hello
 
 about:
   homepage: https://bun.sh
