@@ -38,7 +38,7 @@ source:
   - if: build_platform == "linux-64"
     then:
       url: https://github.com/oven-sh/bun/releases/download/bun-v${{ version }}/bun-linux-x64-baseline.zip
-      sha256: cc14546006bf49419f3a20d2f591c8e167d112e1aa2ef1d8c77e1aec5ead372d
+      sha256: 104d4d037f4b35e10215c0507e1779691f39c57bd91ddeefe11cad781e3fc4b9
       target_directory: bun.native
   - if: build_platform == "win-64"
     then:
