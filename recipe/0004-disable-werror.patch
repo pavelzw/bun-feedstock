@@ -1,17 +1,17 @@
-From f5ed4cf6da4160cf556a5ad63e7717de038eb5b4 Mon Sep 17 00:00:00 2001
-From: Pavel Zwerschke <pavelzw@gmail.com>
-Date: Sat, 7 Feb 2026 21:42:18 +0100
-Subject: [PATCH 4/9] disable werror
+From 3097ec61fa144c23f479499381d74aa9757b315b Mon Sep 17 00:00:00 2001
+From: I-Al-Istannen <i-al-istannen@users.noreply.github.com>
+Date: Tue, 10 Feb 2026 22:11:37 +0100
+Subject: [PATCH] Disable Werror
 
 ---
  cmake/targets/BuildBun.cmake | 23 -----------------------
  1 file changed, 23 deletions(-)
 
 diff --git a/cmake/targets/BuildBun.cmake b/cmake/targets/BuildBun.cmake
-index 969e779aab..a62d3b8435 100644
+index d692ea4..2b7d3a7 100644
 --- a/cmake/targets/BuildBun.cmake
 +++ b/cmake/targets/BuildBun.cmake
-@@ -992,38 +992,15 @@ if(NOT WIN32)
+@@ -1002,40 +1002,17 @@ if(NOT WIN32)
      endif()
  
      target_compile_options(${bun} PUBLIC
@@ -29,6 +29,7 @@ index 969e779aab..a62d3b8435 100644
        -Wno-unused-function
        -Wno-c++23-lambda-attributes
        -Wno-nullability-completeness
+       -Wno-character-conversion
 -      -Werror
      )
    else()
@@ -46,7 +47,11 @@ index 969e779aab..a62d3b8435 100644
 -      -Werror=sometimes-uninitialized
        -Wno-c++23-lambda-attributes
        -Wno-nullability-completeness
+       -Wno-character-conversion
 -      -Werror
      )
  
      if(ENABLE_ASAN)
+-- 
+2.52.0
+
