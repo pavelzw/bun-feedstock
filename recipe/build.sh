@@ -25,3 +25,16 @@ bun ./scripts/build.mjs -GNinja -DCMAKE_BUILD_TYPE=Release ${CMAKE_ARGS} -B buil
 
 mkdir -p $PREFIX/bin
 cp build/release/bun $PREFIX/bin/bun
+
+ln -s bun $PREFIX/bin/bunx
+
+# completions
+mkdir -p $PREFIX/share/zsh/site-functions
+SHELL=zsh $PREFIX/bin/bun completions > $PREFIX/share/zsh/site-functions/_bun
+grep -q '_bun_add_completion' $PREFIX/share/zsh/site-functions/_bun
+mkdir -p $PREFIX/share/bash-completion/completions
+SHELL=bash $PREFIX/bin/bun completions > $PREFIX/share/bash-completion/completions/bun
+grep -q '_file_arguments()' $PREFIX/share/bash-completion/completions/bun
+mkdir -p $PREFIX/share/fish/vendor_completions.d
+SHELL=fish $PREFIX/bin/bun completions > $PREFIX/share/fish/vendor_completions.d/bun.fish
+grep -q '__fish__get_bun_bins' $PREFIX/share/fish/vendor_completions.d/bun.fish
